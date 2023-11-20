@@ -4525,10 +4525,10 @@ Returns:
     Nullable!(int, -1) ni;
     //`get` is implicitly called. Will throw
     //an error in non-release mode
-    assertThrown!Throwable(ni == 0);
+    assertThrown!Throwable(ni.get() == 0);
 
     ni = 0;
-    assertNotThrown!Throwable(ni == 0);
+    assertNotThrown!Throwable(ni.get() == 0);
 }
 }
 
@@ -4559,7 +4559,7 @@ if (is (typeof(nullValue) == T))
     if (!pos.isNull)
     {
         //Send Bob an invitation to lunch
-        sendLunchInvite(coworkers[pos]);
+        sendLunchInvite(coworkers[pos.get()]);
     }
     else
     {
@@ -4580,7 +4580,7 @@ if (is (typeof(nullValue) == T))
     assertThrown!Throwable(a.get);
     a = 5;
     assert(!a.isNull);
-    assert(a == 5);
+    assert(a.get() == 5);
     static assert(a.sizeof == int.sizeof);
 }
 
@@ -4588,7 +4588,7 @@ if (is (typeof(nullValue) == T))
 @safe unittest
 {
     auto a = nullable!(int.min)(8);
-    assert(a == 8);
+    assert(a.get() == 8);
     a.nullify();
     assert(a.isNull);
 }
